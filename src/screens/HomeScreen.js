@@ -1,51 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {Col, Container, Row} from "react-bootstrap";
-import City from "../components/City";
-import Loader from "../components/Loader";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Col, Container, Row } from 'react-bootstrap'
+import City from '../components/City'
+import Loader from '../components/Loader'
 
 const HomeScreen = () => {
-    const {REACT_APP_API_KEY} = process.env;
-    const lat = '36.7763035';
-    const lon = '10.3157484';
-    const [cities,setCities]=useState([]);
-    const[loading,setLoading]=useState(false);
-    const fetchAPI =async ()=>{
-        // const lnk = `https://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=${REACT_APP_API_KEY}`
-        const lnk = `https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=10&units=metric&appid=${REACT_APP_API_KEY}`
-        const res = await axios.get(lnk)
-        const {list} = await res.data;
-        // console.log(list)
-        setCities(list);
+  const { REACT_APP_API_KEY } = process.env
+  const lat = '36.7763035'
+  const lon = '10.3157484'
+  const [cities, setCities] = useState([])
 
-        return list;
-    }
+  const fetchAPI = async () => {
+    // const lnk = `https://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=${REACT_APP_API_KEY}`
+    const lnk = `https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=10&units=metric&appid=${REACT_APP_API_KEY}`
+    const res = await axios.get(lnk)
+    const { list } = await res.data
+    // console.log(list)
+    return setCities(list)
+  }
 
-    useEffect( ()=>{
-        setLoading(true);
-         fetchAPI()
-        setLoading(false)
-        // console.log(cities)
-    })
-    return loading ? (<Loader/>): (
-        <>
-            <div className="App my-5">
-                <Container>
-                    <h1 className='mb-5'>Latest Forecast For Tunisia Cities Today </h1>
-                    <Row>
-                        {
-                            cities.map(city=>(
-                                <Col key={city.id} sm={12} md={6} lg={4} xs={12}>
-                                    <City city={city}  />
-                                </Col>
-                            ))
-                        }
+  useEffect(() => {
+    // console.log(cities)
+    return fetchAPI()
+  })
 
-                    </Row>
-                </Container>
-            </div>
-        </>
-    );
-};
+  return !cities ? (
+    <Loader />
+  ) : (
+    <>
+      <div className='App my-5'>
+        <Container>
+          <h1 className='mb-5'>Latest Forecast For Tunisia Cities Today </h1>
+          <Row>
+            {cities.map((city) => (
+              <Col key={city.id} sm={12} md={6} lg={4} xs={12}>
+                <City city={city} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
+    </>
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen

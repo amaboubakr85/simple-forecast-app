@@ -20,7 +20,7 @@ const HomeScreen = () => {
     }
 
     useEffect( ()=>{
-        fetchAPI()
+      return   fetchAPI()
         // console.log(cities)
     })
     return (

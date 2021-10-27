@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Simple Forecast React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+simple application for checkign the forecast for some cities inside a lat and lon 
 
 ## Available Scripts
 

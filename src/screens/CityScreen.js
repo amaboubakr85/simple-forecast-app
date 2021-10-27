@@ -12,7 +12,7 @@ const CityScreen = ({match}) => {
     const lon = urlElms.split(',')[2];
 
 
-   
+
     const [cityWeather, setCityWeather] = useState(null)
     // console.log('city:',cityName,'lat',lat,'lon',lon)
     // const unixDate = '1634838465';

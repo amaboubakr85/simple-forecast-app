@@ -21,7 +21,11 @@ const HomeScreen = () => {
 
   useEffect(() => {
     // console.log(cities)
-    return fetchAPI()
+    let mounted = true
+    if(mounted){
+     fetchAPI()
+    }
+    return ()=> mounted=false
   })
 
   return !cities ? (

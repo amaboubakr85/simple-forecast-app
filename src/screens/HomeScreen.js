@@ -22,7 +22,7 @@ const HomeScreen = () => {
     useEffect( ()=>{
         fetchAPI()
         // console.log(cities)
-    },[])
+    })
     return (
         <>
             <div className="App my-5">

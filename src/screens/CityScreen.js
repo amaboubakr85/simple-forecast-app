@@ -32,7 +32,7 @@ const CityScreen = ({match}) => {
     useEffect(()=>{
         fetchSingleCity()
         // console.log(cityWeather)
-    },[])
+    })
 
 
     // const imgIcon = `http://openweathermap.org/img/wn/${cityWeather.current.weather[0].icon}@2x.png`

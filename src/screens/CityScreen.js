@@ -12,7 +12,7 @@ const CityScreen = ({match}) => {
     const lon = urlElms.split(',')[2];
 
 
-
+ const[loading,setLoading]=useState(false);
     const[cityWeather,setCityWeather]=useState(null)
     // console.log('city:',cityName,'lat',lat,'lon',lon)
     // const unixDate = '1634838465';
@@ -30,7 +30,9 @@ const CityScreen = ({match}) => {
     }
 
     useEffect(()=>{
+        setLoading(true)
         fetchSingleCity()
+        setLoading(false)
         // console.log(cityWeather)
     })
 
@@ -40,7 +42,7 @@ const CityScreen = ({match}) => {
 
         <>
             {
-                cityWeather ?  ( <Container>
+                !loading ?  ( <Container>
                     <Row>
                         <Col lg={12} md={12} sm={12}>
                             <div className="head">

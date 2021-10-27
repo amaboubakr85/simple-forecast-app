@@ -2,12 +2,14 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import City from "../components/City";
+import Loader from "../components/Loader";
 
 const HomeScreen = () => {
     const {REACT_APP_API_KEY} = process.env;
     const lat = '36.7763035';
     const lon = '10.3157484';
     const [cities,setCities]=useState([]);
+    const[loading,setLoading]=useState(false);
     const fetchAPI =async ()=>{
         // const lnk = `https://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&appid=${REACT_APP_API_KEY}`
         const lnk = `https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=10&units=metric&appid=${REACT_APP_API_KEY}`
@@ -20,10 +22,12 @@ const HomeScreen = () => {
     }
 
     useEffect( ()=>{
-      return   fetchAPI()
+        setLoading(true);
+         fetchAPI()
+        setLoading(false)
         // console.log(cities)
     })
-    return (
+    return loading ? (<Loader/>): (
         <>
             <div className="App my-5">
                 <Container>

@@ -5,12 +5,13 @@ import City from '../components/City'
 import Loader from '../components/Loader'
 
 const HomeScreen = () => {
-  const { REACT_APP_API_KEY } = process.env
+  const { REACT_APP_API_KEY, REACT_APP_IP_KEY } = process.env
   // const lat = '36.7763035'
   // const lon = '10.3157484'
 
   const [cities, setCities] = useState([])
   const [mounted, setMounted] = useState(true)
+  const [country, setCountry] = useState({})
   // const [lons, setLons] = useState('')
   // const [lats, setLats] = useState('')
 
@@ -40,13 +41,36 @@ const HomeScreen = () => {
     return () => setMounted(false)
   })
 
-  return !cities ? (
+  const requestIP = () => {
+    fetch(`http://api.ipstack.com/check?access_key=${REACT_APP_IP_KEY}`)
+      .then((res) => res.json())
+      .then((item) => setCountry(item))
+      .catch((err) => console.log(err))
+  }
+  useEffect(() => {
+    requestIP()
+  }, [])
+
+  return cities.length === 0 ? (
     <Loader />
   ) : (
     <>
       <div className='App my-5'>
         <Container>
-          <h1 className='mb-5'>Latest Forecast For Tunisia Cities Today </h1>
+          <h1 className='mb-5 text-center'>
+            Latest Forecast For {country.country_name} Cities Today{' '}
+          </h1>
+          <h5 className='my-4' style={{ textAlign: 'center' }}>
+            You Are in {country.city}
+          </h5>
+          <Row>
+            <Col md={12} lg={12} sm={12}>
+              <iframe
+                width='100%'
+                height='300'
+                src={`https://maps.google.com/maps?q=${country.latitude},${country.longitude}&output=embed`}></iframe>
+            </Col>
+          </Row>
           <Row>
             {cities.map((city) => (
               <Col key={city.id} sm={12} md={6} lg={4} xs={12}>
